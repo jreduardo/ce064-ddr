@@ -10,10 +10,13 @@ Paraná como disciplina optativa, ministrada pelo professor
 
 ### Tarefas propostas na disciplina:
 
- - [] Criar o repositório da disciplina e conectá-lo com o servidor
+ - [ ] Criar o repositório da disciplina e conectá-lo com o servidor
    GitLab do [c3sl][c3sl].
- - [] Elaborar seu currículo simples em `.md` (markdown)
+ - [ ] Elaborar seu currículo simples em `.md` (markdown)
 
+[ce064]: http://www.leg.ufpr.br/~walmes/ensino/ce064-2015-02/
+[walmes]: http://www.leg.ufpr.br/~walmes
+[c3sl]: http://www.c3sl.ufpr.br/
 
 
 
