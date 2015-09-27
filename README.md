@@ -1,5 +1,5 @@
 # Documentos Dinâmicos Reproduzíveis
-----
+-------------------------------------------
 
 Este repositório objetiva armazenar todos os arquivos desenvolvidos na
 disciplina
@@ -10,13 +10,17 @@ Paraná como disciplina optativa, ministrada pelo professor
 
 ### Tarefas propostas na disciplina:
 
- - [ ] Criar o repositório da disciplina e conectá-lo com o servidor
-   GitLab do [c3sl][c3sl].
- - [ ] Elaborar seu currículo simples em `.md` (markdown)
+ - [x] Criar o repositório da disciplina (nome `ce064`) e conectá-lo com
+   o servidor GitLab do [c3sl][c3sl].  
+ - [x] Adicionar `README.md` ao repositório.  
+ - [x] Elaborar seu currículo simples em (markdown) `curriculum.md` e
+   adicioná-lo ao repositório.  
+ - [x] Incluir [Walmes][walmesgit] como membro colaborador.
 
 [ce064]: http://www.leg.ufpr.br/~walmes/ensino/ce064-2015-02/
 [walmes]: http://www.leg.ufpr.br/~walmes
 [c3sl]: http://www.c3sl.ufpr.br/
+[walmesgit]: https://gitlab.c3sl.ufpr.br/walmes
 
 
 
