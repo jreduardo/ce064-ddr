@@ -269,3 +269,85 @@ getWebMotors <- function(url) {
 ## Teste
 getWebMotors(url = url)
 
+##======================================================================
+## Extração de dados de todas as veiculos no site webMotors
+
+##-------------------------------------------
+## Lendo a primeira página para descobrir o total de veículos
+
+url <- paste0("http://www.webmotors.com.br/comprar/carros/",
+              "novos-usados/veiculos-todos-estados/mitsubishi/",
+              "pajero-dakar?qt=36&o=1&p=1")
+pr <- readLines(con = url)
+
+h <- htmlTreeParse(file = pr, asText = TRUE,
+                   useInternalNodes = TRUE, encoding = "utf-8")
+
+nveiculos <- getNodeSet(
+    doc = h,
+    path = "//span[@class=\"size-xbigger\"]",
+    fun = xmlValue
+)
+
+nveiculos <- as.numeric(
+    gsub(x = as.character(nveiculos),
+         "^([0-9]+) .*$", replacement = "\\1")
+)
+
+nanuncios <- 36 ## Argumento `qt` na url, pode assumir 12, 24 ou 36
+npages <- ceiling(nveiculos / nanuncios)
+
+##----------------------------------------------------------------------
+## Fazendo o processo de extração iterativamente para as `npages`
+## páginas 
+
+da <- data.frame(
+    valor = vector("numeric", nveiculos),
+    nfotos = vector("integer", nveiculos),
+    cilindradas = vector("character", nveiculos),
+    ## cambio = info$tipo,
+    cor = vector("character", nveiculos),
+    km = vector("numeric", nveiculos),
+    cambio = vector("character", nveiculos),
+    ano = vector("integer", nveiculos),
+    anuncio = vector("character", nveiculos),
+    cidade = vector("character", nveiculos),
+    estado = vector("character", nveiculos),
+    stringsAsFactors = FALSE
+)
+
+last <- 0
+for(i in 1:npages) {
+    ## Montando as urls
+    url <- paste0("http://www.webmotors.com.br/comprar/carros/",
+                  "novos-usados/veiculos-todos-estados/mitsubishi/",
+                  "pajero-dakar?qt=", nanuncios, "&o=1&p=", i)
+    ## Extraindo os dados
+    resul <- getWebMotors(url = url)
+    ## Posições de referencia
+    pos <- last + 1
+    last <- nanuncios * i
+    x <- pos:last
+    if( i == npages) x = pos:nveiculos
+    ## Preenchendo o data frame
+    da$valor[x] <- resul$valor
+    da$nfotos[x] <- resul$nfotos
+    da$cilindradas[x] <- resul$cilindradas
+    da$cor[x] <- resul$cor
+    da$km[x] <- resul$km
+    da$cambio[x] <- resul$cambio
+    da$ano[x] <- resul$ano
+    da$anuncio[x] <- resul$anuncio
+    da$cidade[x] <- resul$cidade
+    da$estado[x] <- resul$estado
+}
+
+## Escrevendo em arquivo externo
+write.table(
+    x = da,
+    file = "pajero-dakar.csv",
+    sep = ";",
+    fileEncoding = "utf-8",
+    row.names = FALSE,
+    quote = FALSE
+)
