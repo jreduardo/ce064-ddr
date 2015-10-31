@@ -155,12 +155,17 @@ da <- data.frame(
 ##======================================================================
 ## Funcao para coletar de todas as paginas
 
-getWebMotors <- function(url, n.anuncios) {
+getWebMotors <- function(url) {
     ## Lendo a pagina
     pr <- readLines(con = url, warn = FALSE)
     ## Decodificando-a
     h <- htmlTreeParse(file = pr, asText = TRUE,
                        useInternalNodes = TRUE, encoding = "utf-8")
+    ## Numero de anuncios nesta pagina * O numero de anuncios condiz com
+    ## o número de tags h2 (titulo dos mesmos)
+    n.anuncios <- length(
+        xpathApply(h, "//h2[@itemprop=\"itemOffered\"]",fun = xmlValue)
+    )
     ##-------------------------------------------
     ## Valor do veiculo
     valor <- getNodeSet(
@@ -185,7 +190,7 @@ getWebMotors <- function(url, n.anuncios) {
     fotos <- sapply(fotos, FUN = function(text) {
         gsub(x = text, pattern = "^([0-9]+).*", replacement = "\\1")
     })
-    fotos <- as.numeric(fotos)
+    fotos <- as.integer(fotos)
     ##-------------------------------------------
     ## Informaçoes gerais
     info <- getNodeSet(
@@ -216,9 +221,11 @@ getWebMotors <- function(url, n.anuncios) {
     carac <- unstack(data.frame(carac, id))
     carac$km <- as.numeric(
         sapply(as.list(carac$km), FUN = function(text) {
-            gsub(x = gsub(x = text, pattern = "[[:punct:]]",
-                          replace = "", perl = TRUE),
-                 pattern = "^([0-9]+) km", replacement = "\\1")
+            if(text == "N/I") NA
+            else
+                gsub(x = gsub(x = text, pattern = "[[:punct:]]",
+                              replace = "", perl = TRUE),
+                     pattern = "^([0-9]+) km", replacement = "\\1")
         })
     )
     carac$year <- as.integer(
@@ -252,13 +259,13 @@ getWebMotors <- function(url, n.anuncios) {
         km = carac$km,
         cambio = carac$shift,
         ano = carac$year,
-        anuncio = anuncio,
-        cidade = local$cidade,
-        estado = local$estado
+        anuncio = as.character(anuncio),
+        cidade = as.character(local$cidade),
+        estado = as.character(local$estado)
     )
     return(da)
 }
 
 ## Teste
-getWebMotors(url = url, n.anuncios = 12)
+getWebMotors(url = url)
 
