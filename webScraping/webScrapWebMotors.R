@@ -151,3 +151,114 @@ da <- data.frame(
     anuncio = anuncio,
     local
 )
+
+##======================================================================
+## Funcao para coletar de todas as paginas
+
+getWebMotors <- function(url, n.anuncios) {
+    ## Lendo a pagina
+    pr <- readLines(con = url, warn = FALSE)
+    ## Decodificando-a
+    h <- htmlTreeParse(file = pr, asText = TRUE,
+                       useInternalNodes = TRUE, encoding = "utf-8")
+    ##-------------------------------------------
+    ## Valor do veiculo
+    valor <- getNodeSet(
+        doc = h,
+        path = "//div[@class=\"price\"]",
+        fun = xmlValue
+    )
+    valor <- sapply(valor, FUN = function(text) {
+        gsub(x = gsub(x = text, pattern = "[[:punct:]]",
+                      replace = "", perl = TRUE),
+             pattern = "^.*R([0-9]+).*", replacement = "\\1")
+    })
+    valor <- as.numeric(valor)
+    ##-------------------------------------------
+    ## Numero de fotos
+    fotos <- getNodeSet(
+        doc = h,
+        path = "//div[@class=\"stripe-bottom\"]//span",
+        fun = xmlValue
+    )
+    fotos <- fotos[seq(1, n.anuncios * 2, 2)]
+    fotos <- sapply(fotos, FUN = function(text) {
+        gsub(x = text, pattern = "^([0-9]+).*", replacement = "\\1")
+    })
+    fotos <- as.numeric(fotos)
+    ##-------------------------------------------
+    ## Informaçoes gerais
+    info <- getNodeSet(
+        doc = h,
+        path = "//span[@class=\"version\"]",
+        fun = xmlValue
+    )
+    info <- sapply(info, FUN = function(text) {
+        gsub(x = text, "^([0-9]\\.[0-9]) .* (.*)$",
+             replacement = "\\1")
+    })
+    ## info <- colsplit(info, split = ";", names = c("cil", "tipo"))
+    ##-------------------------------------------
+    ## Caracteristicas
+    carac <- getNodeSet(
+        doc = h,
+        path ="//div[@class=\"features\"]//span",
+        fun = xmlValue
+    )
+    carac <- unlist(carac)
+    id <- xpathSApply(
+        doc = h,
+        path = "//div[@class=\"features\"]//span//i",
+        fun = xmlGetAttr, "class")
+    id <- sapply(as.list(id), FUN = function(text) {
+        gsub(x = text, "^.*-([a-z]+)$", replacement = "\\1")    
+    })
+    carac <- unstack(data.frame(carac, id))
+    carac$km <- as.numeric(
+        sapply(as.list(carac$km), FUN = function(text) {
+            gsub(x = gsub(x = text, pattern = "[[:punct:]]",
+                          replace = "", perl = TRUE),
+                 pattern = "^([0-9]+) km", replacement = "\\1")
+        })
+    )
+    carac$year <- as.integer(
+        sapply(as.list(carac$year), FUN = function(text) {
+            gsub(x = text, "^([0-9]{4})/.*$", replacement = "\\1")
+        })
+    )
+    ##-------------------------------------------
+    ## Informações adicionais
+    info2 <- getNodeSet(
+        doc = h,
+        path ="//div[@class=\"card-footer\"]//span",
+        fun = xmlValue
+    )
+    local <- unlist(info2)[seq(1, n.anuncios * 2, 2)]
+    anuncio <- unlist(info2)[seq(2, n.anuncios * 2, 2)]
+    local <- sapply(as.list(local), FUN = function(text) {
+        gsub(x = text, "^(.*) \\(([A-Z]{2})\\)$",
+             replacement = "\\1;\\2")
+    })
+    local <- colsplit(local, split = ";", names = c("cidade", "estado"))
+    ##-------------------------------------------
+    ##-------------------------------------------
+    ## Organizando a saida
+    da <- list(
+        valor = valor,
+        nfotos = fotos,
+        cilindradas = info,
+        ## cambio = info$tipo,
+        cor = carac$color,
+        km = carac$km,
+        cambio = carac$shift,
+        ano = carac$year,
+        anuncio = anuncio,
+        cidade = local$cidade,
+        estado = local$estado
+    )
+    return(da)
+}
+
+## Teste
+getWebMotors(url = url, n.anuncios = 12)
+
