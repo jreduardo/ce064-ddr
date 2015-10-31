@@ -1,0 +1,11 @@
+*.aux
+*.log
+*.out
+*~
+.#*
+#*
+.Rhistory
+.Rproj.user
+*.Rout
+*.html
+ce064.Rproj
