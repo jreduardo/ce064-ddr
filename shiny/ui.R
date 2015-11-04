@@ -1,5 +1,6 @@
 ##-------------------------------------------
 ## ui.R
+library(shiny)
 
 shinyUI(
     fluidPage(
@@ -63,7 +64,8 @@ shinyUI(
                           ),
                    
                    column(width = 12,
-                          checkboxInput("rug", "Posição dos dados"),
+                          checkboxInput("rug", "Posição dos dados",
+                                        value = TRUE),
                           checkboxInput("box", "Enquadrar gráfico")
                           ),
                    
