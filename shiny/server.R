@@ -1,5 +1,6 @@
 ##-------------------------------------------
 ## server.R
+library(shiny)
 
 rend <- c(6388, 6166, 6047, 5889, 5823, 5513, 5202, 5172, 5166, 4975,
           4778, 4680, 4660, 5403, 5117, 5063, 4993, 4980, 4770, 4685,
@@ -27,10 +28,10 @@ shinyServer(
                 selectInput("kernel", "Escolha o Kernel",
                             choices = choi),
                 
-                sliderInput("bandwidth", "Largura de banda",
-                            min = round(base()$dens$bw * 0.2),
-                            max = round(base()$dens$bw * 2),
-                            value = base()$dens$bw),
+                sliderInput("width", "Largura de banda",
+                            min = round(diff(range(base()$da)) * 0.01),
+                            max = round(diff(range(base()$da))),
+                            value = round(diff(range(base()$da)) * 0.2)),
                 
                 sliderInput("c0", "Coordenada de estimação",
                             min = min(base()$da),
@@ -56,7 +57,7 @@ shinyServer(
             ## Estimando a densidade
             aux <- density(
                 base()$da,
-                bw = input$bandwidth,
+                bw = input$width,
                 kernel = input$kernel)
 
             ## Construindo o histrograma e densidade estimada
@@ -64,7 +65,7 @@ shinyServer(
             hist(da, prob = TRUE,
                  main = NA, yaxt="n", xlab = input$data,
                  ## breaks = seq(min(da), max(da),
-                 ##              length.out = input$bandwidth),
+                 ##              length.out = input$width),
                  xlim = extendrange(range(da), f = 0.2),
                  ylim = c(0, max(base()$dens$y) * 1.3),
                  col = "gray90", border = "white")
@@ -73,8 +74,8 @@ shinyServer(
                   lwd = lwd_dn, col = col_dn)
             
             ## faz o intervalo com o comprimento da banda
-            arrows(input$c0 - 2 * input$bandwidth, 0,
-                   input$c0 + 2 * input$bandwidth, 0,
+            arrows(input$c0 - 0.5 * input$width, 0,
+                   input$c0 + 0.5 * input$width, 0,
                    length = 0.05, code = 3, angle = 90,
                    col = col_kn, lwd = lwd_kn)
             
@@ -85,7 +86,7 @@ shinyServer(
             
             ## desenha a função kernel acima do intevalo
             d <- density(input$c0,
-                         bw = input$bandwidth,
+                         width = input$width,
                          kernel = input$kernel)
             lines(d$x, d$y / length(da), col = col_kn, lwd = lwd_kn)
             
@@ -116,7 +117,7 @@ shinyServer(
                 ## Estimando a densidade
                 aux <- density(
                     base()$da,
-                    bw = input$bandwidth,
+                    bw = input$width,
                     kernel = input$kernel)
 
                 ## Construindo o histrograma e densidade estimada
@@ -124,7 +125,7 @@ shinyServer(
                 hist(da, prob = TRUE,
                      main = NA, yaxt="n", xlab = input$data,
                      ## breaks = seq(min(da), max(da),
-                     ##              length.out = input$bandwidth),
+                     ##              length.out = input$width),
                      xlim = extendrange(range(da), f = 0.2),
                      ylim = c(0, max(base()$dens$y) * 1.3),
                      col = "gray90", border = "white")
@@ -133,8 +134,8 @@ shinyServer(
                       lwd = lwd_dn, col = col_dn)
                 
                 ## faz o intervalo com o comprimento da banda
-                arrows(input$c0 - 2 * input$bandwidth, 0,
-                       input$c0 + 2 * input$bandwidth, 0,
+                arrows(input$c0 - 0.5 * input$width, 0,
+                       input$c0 + 0.5 * input$width, 0,
                        length = 0.05, code = 3, angle = 90,
                        col = col_kn, lwd = lwd_kn)
                 
@@ -145,7 +146,7 @@ shinyServer(
                 
                 ## desenha a função kernel acima do intevalo
                 d <- density(input$c0,
-                             bw = input$bandwidth,
+                             bw = input$width,
                              kernel = input$kernel)
                 lines(d$x, d$y / length(da), col = col_kn, lwd = lwd_kn)
 
