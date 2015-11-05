@@ -8,4 +8,5 @@
 .Rproj.user
 *.Rout
 *.html
+**/cache/*
 ce064.Rproj
