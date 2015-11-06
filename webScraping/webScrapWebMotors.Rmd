@@ -98,31 +98,42 @@ veículo, que chamaremos de `valor`, está dentro de uma tag `div` de
 atributos `class="price"` e `itemprop="price"` e são essas informações
 que possibilitam encontrar este valor e capturá-lo com o R. 
 
-<!-- ![](images/valor.png) -->
+![](images/valor.png)
 
 Uma segunda informação contido no anúncio que seria interessante de se
 coletar é o número de fotos, o nome dado será `nfotos`. Este valor esta
+envolto pela tag `div` que tem o atributo `class="stripe-bottom"`
+conforme figura abaixo.
 
-<!-- ![](images/nfotos.png) -->
+![](images/nfotos.png)
 
 Indo para a porção a direita do anúncio temos algumas informações logo
 abaixo do título do anúncio, a esta informação será dado o nome de
-`info`
+`info`. Para este dado notamos a presença da tag `span` de atributo
+`class="version"` envolvendo toda a *string* com as informações da
+versão do veículo.
 
-<!-- ![](images/info.png) -->
+![](images/info.png)
 
 Temos também algumas característica destacadas com ícones que podem ser
 extraídas e relacionadas com as demais variáveis. Este conjunto de
-informações será chamado de `carac`
+informações será chamado de `carac` e estão presentes, no código fonte da
+página, dentro da tag `div` de `class="features"` com cada valor envolto
+pela tag `span`. Ainda será utilizada a informação da classe da tag `i`
+dentro de cada `span` para verificar a que cada informação obtida se
+refere, isso para caso ocorra destas aparecer no anúncio em ordem
+diferente. 
 
-<!-- ![](images/carac.png) -->
+![](images/carac.png)
 
 Finalmente à direita na parte inferior do anuncio temos as últimas
 informações que serão coletadas, são elas a cidade do veículo e de qual
 proprietário ele é. Estas duas informações serão chamadas de `info2` no
-código R.
+código R e serão coletadas a partir da tag `div` de
+`class="card-footer"` com a localização e proprietário hierarquizados
+abaixo nas tags `span`.
 
-<!-- ![](images/info2.png) -->
+![](images/info2.png)
 
 Com isso temos todas as informações necessárias para implementar o
 código de extração desta primeira página.
