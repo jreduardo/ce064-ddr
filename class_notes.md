@@ -1,6 +1,9 @@
 # Notas / Histórico das aulas
 -------------------------------------------
 
+* 04/11 (Quarta-feira)
+    - Complementando a aplicação `shiny` iniciado com com outros *widgets*
+
 * 28/10 (Quarta-feira)
     - Trabalhando com `shiny`; Criando uma aplicação (densidade kernel,
       similar ao [exemplo no blog ridículas][ridiculas_kernel]) em sala de aula.
@@ -14,5 +17,3 @@
       R.
 
 * 19/10 (Segunda-feira)
-    
-
