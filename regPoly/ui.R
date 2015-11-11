@@ -3,6 +3,8 @@
 
 library(shiny)
 
+ds <- c("swiss", "cars", "longley", "iris", "rock")
+
 shinyUI(
     fluidPage(
         title = "Regressão polinomial",
@@ -12,15 +14,17 @@ shinyUI(
                     color: #fff; text-align: center;
                     background-color: #C8C8C8;
                     padding: 20px; font-weight: bold;"),
-        
-        
+
         sidebarLayout(
             sidebarPanel(
                 fileInput("file", "Upload dos dados"),
 
+                selectInput("data", label = "Conjunto de dados",
+                            choices = ds),
+
                 selectInput("x", "Variável resposta",
                             choices = names(swiss)),
-
+                
                 selectInput("y", "Variável preditora",
                             choices = names(swiss)),
                 
@@ -37,8 +41,8 @@ shinyUI(
                     tabPanel("Summary e Anova", {
                         tagList(
                             verbatimTextOutput("summary"),
-                            verbatimTextOutput("anova"))}
-                            ),
+                            verbatimTextOutput("anova"))
+                    }),
                     
                     tabPanel("Medidas de Influência",
                              dataTableOutput("leverage")
@@ -53,15 +57,6 @@ shinyUI(
                              )
                 )
             )
-
-            ## mainPanel(
-            ##     tabsetPanel(
-            ##         tabPanel("Plot", plotOutput("residuals")),
-            ##         tabPanel("Summary", verbatimTextOutput("summary")),
-            ##         tabPanel("Table", tableOutput("table"))
-            ##     )
-            ## )
-            
         )
     )
 )

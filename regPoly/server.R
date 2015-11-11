@@ -4,17 +4,34 @@
 library(shiny)
 
 shinyServer(
-    function(input, output) {
+    function(input, output, session) {
         ##-------------------------------------------
         ## Testes
         output$teste <- renderPrint({
-            str(input$file)
+            input$x
         })
+
+        ##-------------------------------------------
+        ## Atualizando o widget
+
+        observe({
+            da <- get(input$data)
+            updateSelectInput(
+                session,
+                inputId = "y",
+                choices = names(da))
+            updateSelectInput(
+                session,
+                inputId = "x",
+                choices = names(da),
+                selected = names(da)[2])
+            })
 
         ##-------------------------------------------
         ## Função de ajuste
         reactive_fit <- reactive({
-            dados <- swiss[, c(input$x, input$y)]
+            dados <- get(input$data)
+            dados <- dados[, c(input$x, input$y)]
             names(dados) <- c("x", "y")
             modelo <- lm(
                 formula = y ~ poly(x, degree = input$degree),
@@ -36,9 +53,12 @@ shinyServer(
         })
 
         output$residuals <- renderPlot({
-            par(mfrow = c(2, 2))
+            cols <- c(rgb(0.5, 0.5, 0.5, 0.15),
+                      "#0080ff", "#839496")
+            par(fg = cols[3], col.axis = cols[3],
+                col.lab = cols[2], mfrow = c(2, 2))
             plot(reactive_fit()$modelo)
-        })
+        }, width = 800, height = 800)
 
         output$fit <- renderPlot({
             ##-------------------------------------------
