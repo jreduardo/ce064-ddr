@@ -8,7 +8,7 @@ shinyServer(
         ##-------------------------------------------
         ## Testes
         output$teste <- renderPrint({
-            input$x
+            cat("Testando os objetos shiny<br>Este campo é excluído ao final do desenvolvimento da aplicação")
         })
 
         ##-------------------------------------------
@@ -33,6 +33,9 @@ shinyServer(
             dados <- get(input$data)
             dados <- dados[, c(input$x, input$y)]
             names(dados) <- c("x", "y")
+            if (input$transf) {
+                dados$y <- do.call(input$trans_fun, list(dados$y))
+            }
             modelo <- lm(
                 formula = y ~ poly(x, degree = input$degree),
                 data = dados)

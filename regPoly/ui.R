@@ -31,9 +31,21 @@ shinyUI(
                 numericInput("degree", "Grau do polinômio",
                              value = 1, min = 1, max = 10, step = 1),
 
+                checkboxInput(
+                    "transf",
+                    label = "Transformar a variável resposta?"),
+                
+                conditionalPanel(
+                    "input.transf",
+                    radioButtons(
+                        "trans_fun", label = "Escolha a transformação",
+                        choices = c("sqrt", "log"), inline = TRUE
+                    )
+                ),
+
                 hr(),
 
-                verbatimTextOutput("teste")
+                htmlOutput("teste")
             ),
 
             mainPanel(
