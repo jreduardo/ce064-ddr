@@ -4,6 +4,12 @@
 library(shiny)
 
 ds <- c("swiss", "cars", "longley", "iris", "rock")
+plotres <- c("Residuals vs Fitted" = 1,
+             "Normal Q-Q" = 2,
+             "Scale-Location" = 3,
+             "Cook's distance" = 4,
+             "Residuals vs Leverage" = 5,
+             "Cook's d vs Leverage" = 6)
 
 shinyUI(
     fluidPage(
@@ -60,9 +66,17 @@ shinyUI(
                              dataTableOutput("leverage")
                              ),
                     
-                    tabPanel("Resíduos",
-                             plotOutput("residuals")
+                    tabPanel("Resíduos", {
+                        tagList(
+                            radioButtons(
+                                inputId =  "residuos",
+                                label = "",
+                                choices = plotres,
+                                inline = TRUE
                             ),
+                            plotOutput("residuals")
+                        )
+                    }),
                     
                     tabPanel("Ajuste",
                              plotOutput("fit")

@@ -9,6 +9,7 @@ shinyServer(
         ## Testes
         output$teste <- renderPrint({
             cat("Testando os objetos shiny<br>Este campo é excluído ao final do desenvolvimento da aplicação")
+            input$residuos
         })
 
         ##-------------------------------------------
@@ -59,9 +60,10 @@ shinyServer(
             cols <- c(rgb(0.5, 0.5, 0.5, 0.15),
                       "#0080ff", "#839496")
             par(fg = cols[3], col.axis = cols[3],
-                col.lab = cols[2], mfrow = c(2, 2))
-            plot(reactive_fit()$modelo)
-        }, width = 800, height = 800)
+                col.lab = cols[2])
+            plot(reactive_fit()$modelo, sub = "",
+                 which = as.integer(input$residuos))
+        })
 
         output$fit <- renderPlot({
             ##-------------------------------------------
