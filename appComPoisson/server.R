@@ -6,13 +6,15 @@ library(shiny)
 shinyServer(
     function(input, output, session) {
         
-        ## ##-------------------------------------------
-        ## ## Para testes
-        ## output$teste <- renderPrint({
-        ##     ## summary(ajuste())
-        ##     input$grandTab
-        ## })
-        ## ##-------------------------------------------
+        ##-------------------------------------------
+        ## Para testes
+        output$teste <- renderPrint({
+            ## summary(ajuste())
+            ## input$grandTab
+            da <- dados()[, c(input$varX, input$varY)]
+            str(da)
+        })
+        ##-------------------------------------------
 
         ## Realiza leitura dos dados
         dados <- reactive({
@@ -59,8 +61,8 @@ shinyServer(
                         selectInput(
                             inputId = "varX",
                             label = "Selecione a variável resposta",
-                            choices = names(dados())[names(dados()) != input$varY],
-                            selected = names(dados())[2],
+                            choices = names(dados()),
+                            selected = NA,
                             multiple = TRUE)
                     )
                 }
@@ -72,8 +74,10 @@ shinyServer(
             if (is.null(input$file)) {
                 return(NULL)
             } else {
-                da <- dados()[, c(input$varY, input$varX)]
-                plot(da)
+                da <- dados()[, c(input$varX, input$varY)]
+                if (!is.data.frame(da)) {
+                    barplot(table(da))
+                } else plot(da)
             }
         })
         
