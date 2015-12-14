@@ -2,6 +2,35 @@
 ## server.R
 
 library(shiny)
+library(CompGLM)
+
+##-------------------------------------------
+## FUNCTIONS
+myanova <- function(lista){
+    with(lista, {
+        logVeroP <- as.numeric(logLik(modelP))
+        logVeroC <- as.numeric(logLik(modelC))
+        npP <- length(coef(modelP))
+        npC <- length(coef(modelC)$beta) + 1
+        TRV <- 2 * log(logVeroC - logVeroP)
+        pvalue <- 1 - pchisq(TRV, 1)
+        return(data.frame(
+            "Num.Parameters" = c(npP, npC),
+            "logLik" = c(logVeroP, logVeroC),
+            "diffLog" = c(NA, logVeroP - logVeroC),
+            "TRV" = c(NA, TRV),
+            "pvalue" = c(NA, pvalue)))
+    })
+}
+mypredict <- function(model, y){
+    range <- extendrange(y, f = 4)
+    min <- range[1]; max <- range[2]
+    if (min < 0) min <- 0
+    x <- min:max
+    apply(predict(model), 1, function(par) 
+        sum(x * dcomp(x, lam = par[1], nu = par[2])))
+}
+##-------------------------------------------
 
 shinyServer(
     function(input, output, session) {
@@ -9,10 +38,7 @@ shinyServer(
         ##-------------------------------------------
         ## Para testes
         output$teste <- renderPrint({
-            ## summary(ajuste())
-            ## input$grandTab
-            da <- dados()[, c(input$varX, input$varY)]
-            str(da)
+            
         })
         ##-------------------------------------------
 
@@ -80,7 +106,51 @@ shinyServer(
                 } else plot(da)
             }
         })
-        
+
+        ## Realiza ajuste do modelo
+        ajuste <- reactive({
+            if (is.null(input$file)) {
+                return(NULL)
+            } else {
+                da <- dados()[, c(input$varY, input$varX)]
+                if (is.null(input$varX)) {
+                    da <- data.frame(y = da)
+                    modelP <- glm(y ~ 1, family = poisson, data = da)
+                    modelC <- glm.comp(y ~ 1, data = da)
+                } else {
+                    names(da)[1] <- "Y"
+                    modelP <- glm(Y ~ ., family = poisson, data = da)
+                    modelC <- glm.comp(Y ~ ., data = da)
+                }
+                return(list(modelP = modelP, modelC = modelC))
+            }
+        })
+
+        ## Exibe as inferência para o modelo ajustado
+        output$viewModel <- renderPrint({
+            if (is.null(input$file)) {
+                return(NULL)
+            } else {
+                cat("======================================================================",
+                    "Teste de Razão de verossimilhança entre Poisson e COM-Poisson\n",
+                    capture.output(myanova(ajuste())),
+                    "\n======================================================================",
+                    "Estimativas do modelo",
+                    capture.output(summary(ajuste()$modelC)),
+                    sep = "\n")
+            }
+        })
+
+        ## Exibe o gráfico de resíduos
+        output$viewResiduals <- renderPlot({
+            if (is.null(input$file)) {
+                return(NULL)
+            } else {
+                Y <- dados()[, input$varY]
+                plot(Y - mypredict(ajuste()$modelC, Y))
+            }
+        })
+            
         ##===========================================
         ## Interfaces de usuário
         output$OutputsInterface <- renderUI({
@@ -105,9 +175,14 @@ shinyServer(
                             title = "Descritiva",
                             plotOutput("descrPlot")
                         ),
-                        tabPanel("Modelo"),
-                        tabPanel("Resíduos"),
-                        tabPanel("Ajuste")
+                        tabPanel(
+                            title = "Modelo",
+                            verbatimTextOutput("viewModel")
+                        ),
+                        tabPanel(
+                            title = "Resíduos",
+                            plotOutput("viewResiduals")
+                        )
                     )
                 }
             } else return(NULL) 
@@ -115,3 +190,4 @@ shinyServer(
         
     }
 )
+
