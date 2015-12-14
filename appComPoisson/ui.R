@@ -91,8 +91,11 @@ shinyUI(
 
                     ##-------------------------------------------
                     ## Ajustar modelo
-                    tabPanel("Ajuste"),
-
+                    tabPanel(
+                        title = "Ajuste",
+                        hr(),
+                        uiOutput("variables")),
+                    
                     ##-------------------------------------------
                     ## Editar relatório
                     tabPanel("Relatório")
@@ -103,8 +106,7 @@ shinyUI(
                 width = 7,
                 verbatimTextOutput("teste"),
 
-                uiOutput("OutputsInterface")
-                
+                uiOutput("OutputsInterface")           
             )
         )
     )
