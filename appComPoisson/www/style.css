@@ -1,3 +1,9 @@
+body {
+    font-family: "Palatino";
+    font-size: 15px;
+    text-align: justify;
+}
+
 table.compois {
     margin-left: auto;
     margin-right: auto;
@@ -32,7 +38,7 @@ h1.compois {
     font-size: 2em; 
     font-family: Palatino;
     text-align: center;
-    padding-right: 4em;
+    padding-right: 0em;
 }
 
 h2.compois {
@@ -43,12 +49,40 @@ h2.compois {
     font-family: Ubuntu;
 }
 
-
-
-
 .row {
     margin-right: 50px;
     margin-left: 50px;
 }
 
+input, button, select, textarea {
+    font-family: "Palatino";
+}
 
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: rgb(0, 0, 0);
+    background-color: rgb(254, 167, 14);
+}
+
+a {
+    color: rgb(254, 167, 14);
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    color: #C53E00;
+    text-decoration: underline;
+}
+
+.well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: white;
+    border: none;
+    border-top: 0px solid black;
+    border-bottom: 0px solid black;
+    border-left: 0x solid black;
+    border-right: 1px solid #CCC;
+    border-radius: 0px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.0) inset;
+}
