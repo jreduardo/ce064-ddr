@@ -1,0 +1,155 @@
+---
+title: Aplicativo Shiny para Regressão COM-Poisson
+author: autoria Eduardo E. R. Junior - DEST/UFPR
+date: "Versão 0.1 - 16 de dezembro de 2015"
+---
+
+```{r, include = FALSE}
+
+## Carrega as bibliotecas e funções utilizadas
+library(CompGLM)
+library(rmarkdown)
+library(knitr)
+source("../global.R")
+
+## Denifições do documento
+opts_chunk$set(
+  cache = FALSE,
+  dev.args = list(family = 'Palatino'),
+  echo = FALSE,
+  fig.width = 9,
+  fig.height = 5,
+  comment = ">"
+)
+
+## Carrega os dados gerados pela interface
+load("image.RData")
+
+```
+
+# Introdução #
+
+Este documento foi produzido interativamente via interface web atráves
+do aplicativo Shiny para Regressão COM-Poisson[^CMPshiny]. O aplicativo
+foi elaborado por Eduardo E. R. Junior como parte da disciplina CE089 -
+Ferramentas para Documentos Dinâmicos Reproduzíveis[^ce089] ministrada
+pelo profº Dr. Walmes M. Zeviani. Todo o desenvolvimento se deu sob o
+sistema de versionamento Git e está disponível _on-line_ atráves do
+serviço GitLab[^gitlab] fornecido pelo C3SL (Centro de Computação
+Científica e Software Livre).
+
+Os resultados a seguir são referentes aos dados carregados por
+`r x$name` às `r format(Sys.time(), "%Hh%Mmin")` do dia
+`r format(Sys.time(), '%d de %B de %Y')`. 
+
+`r x$text[1]`
+
+# Conjunto de dados #
+
+Os dados analisados se dispõem da forma como apresentado na tabela
+abaixo, onde as colunas representam as variáveis observadas ou
+experimentadas e as linhas as unidades amostrais.
+
+```{r, results = "asis"}
+
+da <- x$data
+kable(head(da), align = rep("c", ncol(da)))
+
+```
+
+Uma representação gráficas das variáveis, escolhidas como as mais
+importantes no contexto do problema, é apresentado no gráfico abaixo.
+
+```{r}
+
+da <- da[, x$vars]
+if (!is.data.frame(da)) {
+    barplot(table(da))
+} else plot(da)
+
+```
+
+Com isso já temos o embasamento necessário para propôr um modelo
+estatístico condizente com nosso problema.
+
+# O modelo COM-Poisson
+
+Como os dados analisados representam contagens, temos como abordagem
+padrão o modelo _Poisson_, porém em muitas situações a suposição de
+equidispersão deste modelo não é atendida. Uma alternativa paramétrica,
+bastante flexível para dados desta natureza é considerarmos a
+distribuição _COM-Poisson_. A função densidade de probabilidade desta
+distribuição, segue a forma:
+
+$$
+f(y; \lambda; \nu) = \frac{ \lambda_i ^ y}{ ( y! ) ^ \nu } Z( \lambda, \nu)
+$$
+
+```{r, include = FALSE}
+
+## Montando a forma do preditor
+preditor <- ifelse(
+    length(x$vars) == 1,
+    "$\\beta_0$",
+    paste0("$\\beta_{", c(0, x$vars[-1]), "}$", collapse = "+")
+)
+
+```
+
+Onde adotamos para o parâmetro $\lambda$ um preditor linear em função
+das covariáveis. Neste caso o preditor linear é da forma:
+
+* `r preditor`
+
+## Avaliação da fuga de equidispersão ##
+
+Uma das suposições do modelo _Poisson_ é a propriedade de equidispersão,
+isso significa que o modelo pressupõe e a média e variância se
+relacionam de forma linear, numa relação 1 pra 1. Já o modelo
+_COM-Poisson_ é mais flexível ao ponto de permitir que esta relação
+média-variância não seja linear, uma das características favoráveis do
+modelo _COM-Poisson_ é que ele tem como caso paraticular a própria
+distribuição _Poisson_, quando o parâmetro $\nu$ é fixado em 1.
+
+Com isso podemos avaliar a fuga da suposição de equidispersão atráves de
+um teste de razão de verossimilhanças usual entre os modelos _Poisson_
+e _COM-Poisson_ com mesmo preditor linear, que estará testando se o
+parâmetro $\nu$ é igual à 1. Esta avaliação é apresentada na tabela
+abaixo:
+
+
+```{r, results = "asis"}
+
+kable(myanova(x$models), align = rep("c", 5))
+
+```
+
+## Estimativas do modelo ajustado ##
+
+As estimativas do modelo _COM-Poisson_ ajustado aos dados, seguindo o
+preditor linear descrita na seção anterior são:
+
+```{r}
+
+summary(x$models$modelC)
+
+```
+
+## Avaliação dos resíduos ##
+
+
+```{r}
+
+Y <- x$data[, x$vars[1]]
+plot(Y - mypredict(x$models$modelC, Y), ylab = "Resíduos ordinários")
+
+```
+
+# Conclusão #
+
+`r x$text[2]`
+
+[^CMPshiny]: http://shiny.leg.ufpr.br/eduardo/CMPshiny
+[^ce089]: http://www.leg.ufpr.br/~walmes/ensino/ce064-2015-02/
+[^gitlab]: https://gitlab.c3sl.ufpr.br/eerj12/ce064/tree/master/appComPoisson
+
