@@ -11,7 +11,7 @@ tampouco da construção do aplicativo.
 
 #### A aplicação ####
 
-A aplicação contém quatro abas de navagação que são utilizadas
+A aplicação contém quatro abas de navegação que são utilizadas
 sequencialmente para o ajuste de um modelo. As abas são:
 
  - **Sobre**: Contém informações gerais sobre o autor, projeto,
@@ -20,7 +20,7 @@ sequencialmente para o ajuste de um modelo. As abas são:
    carrega um conjunto de dados de seu computador pessoal para o
    aplicativo.
  - **Ajuste**: Nesta etapa são escolhidas as variáveis que farão parte
-   do modelo, tanto a explivativa quanto as preditoras, gráficos
+   do modelo, tanto a explicativa quanto as preditoras, gráficos
    descritivas, medidas resumo do modelo e gráficos de resíduos são
    exibidos como auxílio
  - **Relatório**: Finalmente a última etapa da aplicação é responsável
@@ -35,7 +35,7 @@ sequencialmente para o ajuste de um modelo. As abas são:
     contagem:
         * Binomial Negativo
         * Quase-Poisson
-        * COntagem Gamma
+        * Contagem Gama
  3. Interpretações condicionais no relatório, atualmente não se tem
     interpretações de resultados no relatório.
     

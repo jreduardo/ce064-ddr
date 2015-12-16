@@ -29,12 +29,12 @@ load("image.RData")
 
 # Introdução #
 
-Este documento foi produzido interativamente via interface web atráves
+Este documento foi produzido interativamente via interface web através
 do aplicativo Shiny para Regressão COM-Poisson[^CMPshiny]. O aplicativo
 foi elaborado por Eduardo E. R. Junior como parte da disciplina CE089 -
 Ferramentas para Documentos Dinâmicos Reproduzíveis[^ce089] ministrada
 pelo profº Dr. Walmes M. Zeviani. Todo o desenvolvimento se deu sob o
-sistema de versionamento Git e está disponível _on-line_ atráves do
+sistema de versionamento Git e está disponível _on-line_ através do
 serviço GitLab[^gitlab] fornecido pelo C3SL (Centro de Computação
 Científica e Software Livre).
 
@@ -108,10 +108,10 @@ isso significa que o modelo pressupõe e a média e variância se
 relacionam de forma linear, numa relação 1 pra 1. Já o modelo
 _COM-Poisson_ é mais flexível ao ponto de permitir que esta relação
 média-variância não seja linear, uma das características favoráveis do
-modelo _COM-Poisson_ é que ele tem como caso paraticular a própria
+modelo _COM-Poisson_ é que ele tem como caso particular a própria
 distribuição _Poisson_, quando o parâmetro $\nu$ é fixado em 1.
 
-Com isso podemos avaliar a fuga da suposição de equidispersão atráves de
+Com isso podemos avaliar a fuga da suposição de equidispersão através de
 um teste de razão de verossimilhanças usual entre os modelos _Poisson_
 e _COM-Poisson_ com mesmo preditor linear, que estará testando se o
 parâmetro $\nu$ é igual à 1. Esta avaliação é apresentada na tabela

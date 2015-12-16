@@ -6,7 +6,7 @@ library(shinythemes)
 
 shinyUI(
     fluidPage(
-        ## theme = shinytheme("united"),
+        title = "COM-Poisson App",
         ##-------------------------------------------
         ## Inclui estilo css
         tags$head(

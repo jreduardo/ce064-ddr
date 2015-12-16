@@ -107,7 +107,7 @@ shinyServer(
                             choices = names(dados())),
                         selectInput(
                             inputId = "varX",
-                            label = "Selecione a variável resposta",
+                            label = "Selecione a(s) variável(is) preditoras",
                             choices = names(dados()),
                             selected = NA,
                             multiple = TRUE)
