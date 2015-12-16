@@ -3,6 +3,7 @@
 
 library(shiny)
 library(CompGLM)
+library(rmarkdown)
 
 ##-------------------------------------------
 ## FUNCTIONS
@@ -30,6 +31,27 @@ mypredict <- function(model, y){
     apply(predict(model), 1, function(par) 
         sum(x * dcomp(x, lam = par[1], nu = par[2])))
 }
+mycompile <- function(format, file){
+    switch(
+        format,
+        "PDF" = render(file,
+                       output_format = pdf_document(
+                           toc = TRUE,
+                           number_sections = TRUE,
+                           includes = includes(in_header = "style_report.tex")
+                       )),
+        "HTML" = render(file,
+                        output_format = html_document(
+                            toc = TRUE,
+                            number_sections = TRUE,
+                            css = "style_report.css"
+                        )),
+        "MS Word" = render(file,
+                           output_format = word_document()),
+        "MD" = render(file, output_format = md_document())
+    )
+}
+
 ##-------------------------------------------
 
 shinyServer(
@@ -38,7 +60,7 @@ shinyServer(
         ##-------------------------------------------
         ## Para testes
         output$teste <- renderPrint({
-            
+            ## input$userExplanation
         })
         ##-------------------------------------------
 
@@ -71,7 +93,6 @@ shinyServer(
                 head(dados(), n = 10)
             }
         })
-
         ## Retorna os widgets referentes à escolha da variavel
         ## explicativa e das preditoras
         output$variables <- renderUI({
@@ -147,47 +168,139 @@ shinyServer(
                 return(NULL)
             } else {
                 Y <- dados()[, input$varY]
-                plot(Y - mypredict(ajuste()$modelC, Y))
+                plot(Y - mypredict(ajuste()$modelC, Y),
+                     ylab = "Resíduos ordinários")
             }
         })
-            
-        ##===========================================
-        ## Interfaces de usuário
-        output$OutputsInterface <- renderUI({
-            ##-------------------------------------------
-            if (input$grandTab == "Dados") {
+
+        ## Compila o relatório
+        output$download <- downloadHandler(
+            filename = function(){
+                switch(
+                    input$format,
+                    "PDF" = "report.pdf",
+                    "HTML" = "report.html",
+                    "MS Word" = "report.docx",
+                )
+            },
+            content = function(file){
+                ## Converte de Rmd para o formato descrito
+                generate <- mycompile(
+                    input$format,
+                    "./www/relatorio.Rmd")
+                ## Empurra o arquivo para download.
+                file.copy(from = generate,
+                          to = file,
+                          overwrite = TRUE)
+                ## ## Remove arquivos auxiliares descessários.
+                ## file.remove(list.files(
+                ##     pattern="\\.(log|out|vrb|pdf)$"))
+            })
+
+        output$report <- renderUI({
+            if (input$grandTab == "Relatório") {
                 if (is.null(input$file)) {
-                    return(NULL)
+                    HTML("<font style=\"font-weight: bold; color:red\">Carregue o conjunto de dados</font>")
                 } else {
-                    return(
-                        verbatimTextOutput("viewData")
-                    )
-                }
-            }
-            
-            ##-------------------------------------------
-            if (input$grandTab == "Ajuste") {
-                if (is.null(input$file)) {
-                    return(NULL)
-                } else {
-                    tabsetPanel(
-                        tabPanel(
-                            title = "Descritiva",
-                            plotOutput("descrPlot")
-                        ),
-                        tabPanel(
-                            title = "Modelo",
-                            verbatimTextOutput("viewModel")
-                        ),
-                        tabPanel(
-                            title = "Resíduos",
-                            plotOutput("viewResiduals")
+                    if (is.null(input$varY)) {
+                        HTML("<font style=\"font-weight: bold; color:red\">Ajuste o modelo primeiro</font>")
+                    } else {
+                        tagList(
+
+                            textInput(
+                                inputId =  "userName",
+                                label = "Nome do utilizador",
+                                value = "Utilizador"
+                            ),
+                            
+                            HTML("<label>Uma breve introdução</label>"),
+                            HTML('<textarea id="userExplanation"
+                              rows="4" cols="40" style="width: 100%"> </textarea>'),
+
+                            HTML("<label>Conclusão</label>"),
+                            HTML('<textarea id="userConclusion"
+                              rows="4" cols="40" style="width: 100%"> </textarea>'),
+                            
+                            radioButtons(
+                                inputId = "format",
+                                label = "Formato do relatório",
+                                choices = c("PDF", "HTML", "MS Word"),
+                                inline = TRUE),
+
+                            downloadButton(
+                                outputId = "download",
+                                label = "Download")
                         )
-                    )
+                    }
                 }
-            } else return(NULL) 
+            } else return(NULL)
         })
         
+        ##===========================================
+        ## Interfaces de usuário no mainPanel
+        output$OutputsInterface <- renderUI({
+
+            ##-------------------------------------------
+            if (input$grandTab == "Sobre") {
+                HTML("Sobre")
+            } else {
+                
+                ##-------------------------------------------
+                if (input$grandTab == "Dados") {
+                    if (is.null(input$file)) {
+                        return(NULL)
+                    } else {
+                        return(
+                            verbatimTextOutput("viewData")
+                        )
+                    }
+                } else {
+                    
+                    ##-------------------------------------------
+                    if (input$grandTab == "Ajuste") {
+                        if (is.null(input$file)) {
+                            return(NULL)
+                        } else {
+                            tabsetPanel(
+                                tabPanel(
+                                    title = "Descritiva",
+                                    plotOutput("descrPlot")
+                                ),
+                                tabPanel(
+                                    title = "Modelo",
+                                    verbatimTextOutput("viewModel")
+                                ),
+                                tabPanel(
+                                    title = "Resíduos",
+                                    plotOutput("viewResiduals")
+                                )
+                            )
+                        }
+                    } else {
+                        if (input$grandTab == "Relatório") {
+                            if (is.null(input$file) || is.null(input$varY)) {
+                                return(NULL)
+                            } else {
+                                ## Salva os objetos utilizados no relatório
+                                x <- list(
+                                    data = dados(),
+                                    vars = c(input$varY, input$varX),
+                                    models = ajuste(),
+                                    name = input$userName,
+                                    text = c(input$userExplanation,
+                                             input$userConclusion)
+                                )
+                                save(x, file = "./www/image.RData")
+                                mycompile(
+                                    "MD", "./www/relatorio.Rmd"
+                                )
+                                includeMarkdown("./www/relatorio.md")
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
 )
 

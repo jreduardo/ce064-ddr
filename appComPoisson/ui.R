@@ -11,7 +11,11 @@ shinyUI(
             tags$link(
                 rel = "stylesheet",
                 type = "text/css",
-                href = "style.css")
+                href = "style.css"),
+            tags$script(
+                type = "text/javascript",
+                src = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+            )
         ),
 
         ##-------------------------------------------
@@ -94,18 +98,22 @@ shinyUI(
                     tabPanel(
                         title = "Ajuste",
                         hr(),
-                        uiOutput("variables")),
+                        uiOutput("variables")
+                    ),
                     
                     ##-------------------------------------------
                     ## Editar relatório
-                    tabPanel("Relatório")
+                    tabPanel(
+                        title = "Relatório",
+                        hr(),
+                        uiOutput("report")   
+                    )
                 )
             ),
 
             mainPanel(
                 width = 7,
-                verbatimTextOutput("teste"),
-
+                ## verbatimTextOutput("teste"),
                 uiOutput("OutputsInterface")           
             )
         )
