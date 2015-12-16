@@ -2,9 +2,11 @@
 ## ui.R
 
 library(shiny)
+library(shinythemes)
 
 shinyUI(
     fluidPage(
+        ## theme = shinytheme("united"),
         ##-------------------------------------------
         ## Inclui estilo css
         tags$head(
@@ -27,7 +29,8 @@ shinyUI(
            </td>  
            <td class = 'compois'> 
               <h1 class = 'compois'>
-                  Regressão Conway-Maxwell-Poisson
+                  Regressão Conway-Maxwell-Poisson<br>
+                  <font style='font-weight: normal; font-size: 14pt'><em>Versão 0.1</em></font>
               </h1><br>
            </td>
         </table>"),
@@ -42,7 +45,19 @@ shinyUI(
                     type = "pills",
                     ##-------------------------------------------
                     ## Informações gerais
-                    tabPanel("Sobre"),
+                    tabPanel(
+                        title = "Sobre",
+                        hr(),
+                        HTML("
+                             <center>
+                                <p><b>Autor:</b> Eduardo Elias Ribeiro Junior<p/>
+                                <p><b>Código-fonte:</b> Disponível no serviço GitLab do C3SL.</p>
+                                   <a href=\"https://gitlab.c3sl.ufpr.br/eerj12/ce064/tree/master/appComPoisson\">
+                                      <img src = 'gitlabc3sl.svg' height = '110' width = '220'> </img>
+                                   </a>
+                             </center>
+                             ")
+                    ),
 
                     ##-------------------------------------------
                     ## Ler dados

@@ -242,7 +242,7 @@ shinyServer(
 
             ##-------------------------------------------
             if (input$grandTab == "Sobre") {
-                HTML("Sobre")
+                includeMarkdown("README.md")
             } else {
                 
                 ##-------------------------------------------
