@@ -1,5 +1,5 @@
 ---
-title: "Introdução ao Machine Learning"
+title: "Ferramentas para Documentos Dinâmicos Reproduzíveis"
 subtitle: "Disciplina CE064 da graduação em Estatística UFPR"
 output: html_document
 ---

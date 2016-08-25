@@ -36,8 +36,8 @@ op <- options(gvis.plot.tag = "chart")
 library(rCharts)
 ## Para renderização rCharts
 options(
-  ## rcharts.mode = 'iframesrc',
-  ## rcharts.cdn = TRUE,
+  rcharts.mode = 'iframe',
+  rcharts.cdn = TRUE,
   RCHART_WIDTH = 800,
   RCHART_HEIGHT = 400
 )
@@ -425,7 +425,7 @@ rp <- nPlot(~ cor, data = da[order(da$cor),], type = 'pieChart')
 rp$chart(color = c("blue", "#D0D0D0", "#5C5C5C", "gold", "orange",
                    "brown", "#949494", "black", "green", "red",
                    "#6B1010"))
-rp$print(include_assets=TRUE)
+rp
 ```
 
 Percebemos que há uma predominância das cores `branco`, `preto` e
@@ -454,7 +454,7 @@ rp <- nPlot(Frequência ~ AnoFabricação,
 ##     "rCharts_nvd3_templates/chartWithTitle.html")
 ## rp$set(title = paste("Densidade do logaritmo de base 10 dos ",
 ##                      "valores (R$) dos veículos"))
-rp$print()
+rp
 ```
 
 Neste gráfico temos a disposição do ano de fabricação dos veículos e
@@ -522,7 +522,7 @@ rp$xAxis(axisLabel = "Logaritmo dos valores (R$) dos veículos")
 ##     "rCharts_nvd3_templates/chartWithTitle.html")
 ## rp$set(title = paste("Densidade do logaritmo de base 10 dos ",
 ##                      "valores (R$) dos veículos"))
-rp$print()
+rp
 ```
 
 Para a variável de maior interesse nesse estudo, o preço dos veículos,
@@ -551,7 +551,7 @@ rp$guides(
                 } !#", title = "Motor"))
 rp$set(title = paste("Dispersão dos logaritmo dos preços com relação",
                       "aos quilômetros rodados"))
-rp$print(include_assets = TRUE)
+rp
 ```
 
 #### Frequência de anúncios por anunciante e cor ####
@@ -569,7 +569,7 @@ rp$chart(color = c("#D0D0D0", "#5C5C5C", "black", "#1F77B4"))
 ##     "rCharts_nvd3_templates/chartWithTitle.html")
 ## rp$set(title = paste("Logaritmo de base 10 dos valores",
 ##                      "dos veículos (R$) por anunciante"))
-rp$print()
+rp
 ```
 
 #### Preço vs número de fotos do anúncios ####
@@ -640,7 +640,7 @@ rp$addControls("y", value = "lvalor",
 rp$addControls("color", value = "motor",
                values = c("motor", "cambio", "anuncio", "cor", "estado"))
 rp$set(dom = 'chartcontrols')
-rp$print(include_assets = TRUE)
+rp
 ```
 <style>#iframe-chartcontrols{height: 400px; width: 1000px}</style>
 
@@ -661,7 +661,7 @@ rp <- nPlot(Freq ~ lvalorCateg, group = "Cambio", data = resumo,
       type = "multiBarChart", id = 'chartfilter')
 rp$addFilters("Anunciante")
 rp$set(dom = 'chartfilter')
-rp$print(include_assets = TRUE)
+rp
 ```
 <style>#iframe-chartfilter{height: 700px;  width:900px}</style>
 
