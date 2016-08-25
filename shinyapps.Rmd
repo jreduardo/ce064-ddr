@@ -1,0 +1,38 @@
+---
+title: "Aplicativos Shiny"
+output: html_document
+---
+
+Abaixo são listados alguns dos aplicativos `shiny` elaborados durante a
+disciplina.
+
+ * **Regressão Polinomial**\
+   Disponível online em [http://shiny.leg.ufpr.br/eduardo/regPoly](http://shiny.leg.ufpr.br/eduardo/regPoly).
+```{r, eval=FALSE}
+
+## Execute localmente
+shiny::runGitHub("ce064-ddr", "JrEduardo", subdir = "regPoly/")
+
+```
+
+<br>
+
+ * **Estimação de densidade por kernel**\
+   Disponível online em [http://shiny.leg.ufpr.br/eduardo/densityKernel](http://shiny.leg.ufpr.br/eduardo/densityKernel).
+```{r, eval=FALSE}
+
+ ## Execute localmente
+ shiny::runGitHub("ce064-ddr", "JrEduardo", subdir = "densityKernel/")
+
+ ```
+
+<br>
+
+ * **Regressão COM-Poisson**\
+   Disponível online em [http://shiny.leg.ufpr.br/eduardo/appComPoisson](http://shiny.leg.ufpr.br/eduardo/appComPoisson).
+```{r, eval=FALSE}
+
+## Execute localmente
+shiny::runGitHub("ce064-ddr", "JrEduardo", subdir = "appComPoisson/")
+
+```

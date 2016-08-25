@@ -1,0 +1,32 @@
+---
+title: "Introdução ao Machine Learning"
+subtitle: "Disciplina CE064 da graduação em Estatística UFPR"
+output: html_document
+---
+
+Página dedicada ao armazenamento e disponibilização dos materiais
+elaborados na disciplina
+[CE064 - Ferramentas para Documentos Dinâmicos Reproduzíveis][ce064],
+ofertada pelo departamento de Estatística na Universidade Federal do
+Paraná como disciplina optativa, ministrada pelo professor
+[Walmes Zeviani][walmes].
+
+Na disciplina foram contemplados os temas de sistema de versionamento
+Git, pesquisa reproduzível, linguagens de marcação e documentos hibrídos
+(R+markdown, R+Latex), mineração de dados da web - webScraping, gráficos
+web interativos e interfaces web com R utilizando o pacote
+`shiny`.
+
+No decorrer das aulas algumas atividades foram propostas, as quais estão
+disponíveis nos links abaixo:
+
+* [Currículo](./curriculum/edu_moderncv.pdf)
+* [WebScrap no site Web Motors](./webScrapWebMotors.html)
+* [Aplicativos Shiny](./shinyapps.html)
+
+<!--------------------------------------------- -->
+[ce064]: http://www.leg.ufpr.br/doku.php/pessoais:e.ferreira:ce064
+[eferreira]: http://www.leg.ufpr.br/doku.php/pessoais:e.ferreira
+[livro]: http://www.springer.com/us/book/9781461471370
+[amir]: http://princehonest.com/
+[solutions]: http://blog.princehonest.com/stat-learning/
