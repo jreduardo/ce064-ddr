@@ -7,12 +7,10 @@
 .Rhistory
 .Rproj.user
 *.Rout
-*.html
 **/cache/*
 ce064.Rproj
 **/www/*.tex
 **/www/*.tex.bak
-**/www/*.pdf
 **/www/*.docx
 **/www/*.md
 **/www/*.RData

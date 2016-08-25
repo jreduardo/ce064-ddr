@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="_style-pages.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 45px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+
+.section h2 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h3 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h4 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h5 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h6 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Atividades
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="curriculum/edu_moderncv.pdf">Currículo</a>
+    </li>
+    <li>
+      <a href="webScrapWebMotors.html">webScraping</a>
+    </li>
+    <li>
+      <a href="shinyapps.html">Aplicativos Shiny</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://jreduardo.github.io/">Eduardo Jr's website</a>
+</li>
+<li>
+  <a href="https://github.com/JrEduardo/ce064-ml">
+    <span class="fa fa-github-alt fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="eduardo-elias-ribeiro-junior" class="section level2">
+<h2>Eduardo Elias Ribeiro Junior</h2>
+<blockquote>
+<p>Brasileiro, solteiro, 20 anos<br />
+ João Catarino Filho, Colombo-PR<br />
+ Telefone: (+55) 3361 3261<br />
+ E-mail: <a href="mailto:edujrrib@gmail.com">edujrrib@gmail.com</a></p>
+</blockquote>
+</div>
+<div id="formacao-academica" class="section level2">
+<h2>Formação Acadêmica</h2>
+<ul>
+<li><strong>Estatística</strong>, Universidade Federal do Paraná (UFPR), Bacharelado.<br />
+ 2012 - atual: <em>8º período (78% concluído)</em></li>
+</ul>
+</div>
+<div id="formacao-complementar" class="section level2">
+<h2>Formação Complementar</h2>
+<ul>
+<li><p><strong>Programa de Educação Tutorial de Estatística - UFPR</strong>, bolsista<br />
+ 2013-atual: <em>Coordenar/participar de diversos projetos que promovem a formação acadêmica plena (científica e pessoalmente) voltada para o tripé ensino, pesquisa e extensão objetivando a melhoria na qualidade da graduação.</em></p></li>
+<li><p><strong>SENAI PR - Serviço Nacional de Aprendizagem Industrial</strong>, estágiario<br />
+ 2013-2014: <em>Elaborar relatórios e planilhas de controle para distribuição de recursos referente ao PRONATEC (Programa Nacional de Acesso ao Ensino Técnico e Emprego) a nível regional.</em></p></li>
+<li><p><strong>Programa de Iniciação à Docência - UFPR</strong>, voluntário<br />
+ 2012: <em>Prestar monitoria aos alunos dos cursos de CE002 – Estatística I e CE003 – Estatística II desenvolvendo habilidades didáticas para o ensino.</em></p></li>
+</ul>
+</div>
+<div id="experiencia" class="section level2">
+<h2>Experiência</h2>
+<div id="experiencia-profissional" class="section level3">
+<h3>Experiência profissional</h3>
+<ul>
+<li><strong>BRF - Brasil Foods S.A.</strong>, menor aprendiz (2011) e assistente administrativo (2013)<br />
+ 2011-2013: <em>Responsável pelo controle e monitoramento de indicadores de desempenho logístico da empresa e auxilio na elaboração de planos de ação para eventuais desvios nos resultados previstos.</em></li>
+</ul>
+</div>
+<div id="cursos-ministrados" class="section level3">
+<h3>Cursos ministrados</h3>
+<ul>
+<li><p><strong>60ª RBras e 16º SEAGRO</strong>, 2h, <em>Explorando interfaces gráficas interativas com o R</em><br />
+ 2015: <a href="http://www.leg.ufpr.br/iguiR">www.leg.ufpr.br/iguiR</a></p></li>
+<li><p><strong>Universidade Federal do Paraná</strong>, 2h, <em>Oficina de {} - Facite sua vida acadêmica</em><br />
+ 2015: <a href="http://www.pet.est.ufpr.br/latex">www.pet.est.ufpr.br/latex</a></p></li>
+</ul>
+</div>
+</div>
+<div id="interesses" class="section level2">
+<h2>Interesses</h2>
+<ul>
+<li>Estatística<br />
+</li>
+<li>Inferência Estatística<br />
+</li>
+<li>Modelos de Regressão<br />
+</li>
+<li>Estatística Computacional<br />
+</li>
+<li><p>Educação Estatística</p></li>
+<li>Computação</li>
+<li>Gerenciamento de banco de dados</li>
+<li>Técnicas de paralelização</li>
+<li>Programação em <em>Python</em></li>
+<li><p><em>Shell Script</em></p></li>
+</ul>
+</div>
+<div id="habilidades-computacionais" class="section level2">
+<h2>Habilidades Computacionais</h2>
+<ul>
+<li>Sistemas Operacionais<br />
+</li>
+<li><p>Linux, Windows</p></li>
+<li>Linguagens de Programação<br />
+</li>
+<li><p>R, LaTeX</p></li>
+<li>Ferramentas<br />
+</li>
+<li><p>Git (GitHub/GitLab), Shell, Markdown, Planilhas eletrônicas</p></li>
+</ul>
+</div>
+<div id="idiomas" class="section level2">
+<h2>Idiomas</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Compreende</th>
+<th align="center">Fala</th>
+<th align="center">Lê</th>
+<th align="center">Escreve</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Inglês</strong></td>
+<td align="center">Pouco</td>
+<td align="center">Pouco</td>
+<td align="center">Razoavelmente</td>
+<td align="center">Pouco</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Espanhol</strong></td>
+<td align="center">Razoavelmente</td>
+<td align="center">Pouco</td>
+<td align="center">Razoavelmente</td>
+<td align="center">Pouco</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="sites-e-paginas" class="section level2">
+<h2>Sites e páginas</h2>
+<p>PET-Estatística - <a href="http://www.pet.est.ufpr.br/?p=1273">www.pet.est.ufpr.br/?p=1273</a><br />
+GitHub - <a href="https://github.com/JrEduardo">github.com/JrEduardo</a><br />
+GitLab/c3sl - <a href="gitlab.c3sl.ufpr.br/eerj12" class="uri">gitlab.c3sl.ufpr.br/eerj12</a></p>
+</div>
+
+<br>
+<hr>
+<center>© Copyright 2016 Ribeiro Jr., E. E.</center>
+<br>
+
+<div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'eerj-website';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
